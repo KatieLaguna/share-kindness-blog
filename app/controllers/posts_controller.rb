@@ -1,4 +1,8 @@
 class PostsController < ApplicationController
+
+	#temporary insecure authentication
+	http_basic_authenticate_with name: "admin", password: "admin123", except: [:index, :show]
+	
 	def index
 		@posts = Post.all
 	end
@@ -17,7 +21,7 @@ class PostsController < ApplicationController
 
 		 if(@post.save)
 			redirect_to @post
-		else 
+		else
 			render 'new'
 		end
 	end
@@ -41,6 +45,10 @@ class PostsController < ApplicationController
 		@post.destroy
 			
 		redirect_to posts_path
+	end
+
+	def find_post
+		@post = Post.find(params[:id])
 	end
 
 	private def post_params

@@ -1,4 +1,8 @@
 class CommentsController < ApplicationController
+
+	#temporary insecure authentication
+	http_basic_authenticate_with name: "admin", password: "admin123", only: [:index, :show]
+
 	def create 
 		@post = Post.find(params[:post_id])
 		@comment = @post.comments.create(comment_params)
